@@ -422,7 +422,43 @@
       font-size: 11px; color: #34d399;
       background: rgba(16,185,129,0.15); padding: 2px 9px; border-radius: 10px;
     }
-    .form-actions { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+
+    /* ── DROPDOWN AÇÕES ── */
+    .acoes-wrap { position: relative; display: inline-block; margin-bottom: 10px; }
+    .btn-acoes {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border: 0.5px solid var(--border-modal);
+      border-radius: 6px; background: rgba(255,255,255,0.05);
+      color: var(--text-modal-body); font-size: 12px; cursor: pointer;
+      transition: background 0.12s;
+    }
+    .btn-acoes:hover { background: rgba(255,255,255,0.09); color: var(--text-modal-title); }
+    .btn-acoes i.chevron { font-size: 12px; transition: transform 0.18s; }
+    .btn-acoes.open i.chevron { transform: rotate(180deg); }
+    .acoes-menu {
+      position: absolute; top: calc(100% + 6px); left: 0;
+      background: #2a2e48; border: 0.5px solid var(--border-modal);
+      border-radius: 8px; padding: 4px; min-width: 170px;
+      z-index: 50; opacity: 0; pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.15s, transform 0.15s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .acoes-menu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .acoes-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; border-radius: 5px; cursor: pointer;
+      font-size: 12px; color: var(--text-modal-body);
+      transition: background 0.1s;
+    }
+    .acoes-item:hover { background: rgba(255,255,255,0.07); color: var(--text-modal-title); }
+    .acoes-item i { font-size: 14px; width: 16px; text-align: center; }
+    .acoes-item.orange { color: var(--accent-orange); }
+    .acoes-item.orange:hover { background: rgba(251,146,60,0.1); }
+    .acoes-item.red { color: #f87171; }
+    .acoes-item.red:hover { background: rgba(239,68,68,0.1); }
+    .acoes-divider { height: 0.5px; background: var(--border-modal); margin: 4px 0; }
+
     .btn-xs {
       display: flex; align-items: center; gap: 4px;
       padding: 4px 10px; border: 0.5px solid var(--border-modal);
@@ -432,6 +468,28 @@
     .btn-xs:hover { background: rgba(255,255,255,0.08); color: var(--text-modal-title); }
     .btn-xs.orange { color: var(--accent-orange); border-color: rgba(251,146,60,0.35); }
     .btn-xs.red    { color: #f87171; border-color: rgba(239,68,68,0.35); }
+
+    /* ── MODAL HEADER MELHORADO ── */
+    .modal-header-info { display: flex; flex-direction: column; gap: 3px; }
+    .modal-header-name { font-size: 16px; font-weight: 700; color: var(--text-modal-title); }
+    .modal-header-sub  { display: flex; align-items: center; gap: 8px; }
+    .modal-stage-badge {
+      font-size: 11px; font-weight: 500;
+      padding: 2px 10px; border-radius: 10px;
+      background: rgba(6,182,212,0.15); color: var(--accent-cyan);
+      border: 0.5px solid rgba(6,182,212,0.3);
+    }
+    .modal-header-meta { font-size: 11px; color: var(--text-modal-muted); }
+    .modal-header-actions { display: flex; align-items: center; gap: 8px; }
+    .modal-icon-btn {
+      width: 30px; height: 30px; border-radius: 7px;
+      border: 0.5px solid var(--border-modal);
+      background: rgba(255,255,255,0.04);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-modal-muted); font-size: 15px;
+      transition: background 0.12s, color 0.12s;
+    }
+    .modal-icon-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-modal-title); }
 
     .form-data {
       background: var(--bg-modal-formdata); border-radius: 6px; padding: 12px;
@@ -657,8 +715,30 @@
 <div class="modal-overlay" id="modalEdit" onclick="onOverlayClick(event,'modalEdit')">
   <div class="modal-edit">
     <div class="modal-top">
-      <span class="modal-title">Editar Item</span>
-      <i class="ti ti-x icon-close" onclick="closeEdit()"></i>
+      <div class="modal-header-info">
+        <div class="modal-header-name" id="modalCardName">RC Simples &amp; Reformas</div>
+        <div class="modal-header-sub">
+          <span class="modal-stage-badge" id="modalStageBadge">Lead</span>
+          <span class="modal-header-meta"><i class="ti ti-user" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i><span id="modalRespName">Jefferson Pires</span></span>
+          <span class="modal-header-meta" style="color:var(--border-modal);">·</span>
+          <span class="modal-header-meta"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>Criado 20/05/26</span>
+        </div>
+      </div>
+      <div class="modal-header-actions">
+        <div class="modal-icon-btn" title="Copiar link"><i class="ti ti-link"></i></div>
+        <div class="modal-icon-btn" title="Abrir em nova aba"><i class="ti ti-external-link"></i></div>
+        <div class="modal-icon-btn" title="Mais opções" id="btnMoreOptions" onclick="toggleMoreMenu()"><i class="ti ti-dots-vertical"></i></div>
+        <div style="position:relative;">
+          <div class="acoes-menu" id="moreMenu" style="right:0;left:auto;top:36px;">
+            <div class="acoes-item"><i class="ti ti-bell"></i> Ativar notificações</div>
+            <div class="acoes-item"><i class="ti ti-tag"></i> Adicionar etiqueta</div>
+            <div class="acoes-divider"></div>
+            <div class="acoes-item orange"><i class="ti ti-archive"></i> Arquivar item</div>
+            <div class="acoes-item red"><i class="ti ti-trash"></i> Excluir item</div>
+          </div>
+        </div>
+        <i class="ti ti-x icon-close" onclick="closeEdit()" style="margin-left:4px;"></i>
+      </div>
     </div>
     <div class="modal-body">
 
@@ -702,30 +782,39 @@
           <button class="btn-primary"><i class="ti ti-link"></i> Vincular</button>
         </div>
 
-        <div class="form-card">
-          <div class="form-card-header">
-            <span class="form-card-title">
-              <i class="ti ti-file-text" style="font-size:14px;color:var(--accent-cyan);"></i>
-              RC Simples &amp; Reformas
-            </span>
-            <span class="badge-success">✓ Respondido</span>
+          <div class="form-card">
+            <div class="form-card-header">
+              <span class="form-card-title">
+                <i class="ti ti-file-text" style="font-size:14px;color:var(--accent-cyan);"></i>
+                RC Simples &amp; Reformas
+              </span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="badge-success">✓ Respondido</span>
+                <div class="acoes-wrap">
+                  <button class="btn-acoes" id="btnAcoes" onclick="toggleAcoes()">
+                    <i class="ti ti-adjustments-horizontal"></i> Ações
+                    <i class="ti ti-chevron-down chevron"></i>
+                  </button>
+                  <div class="acoes-menu" id="acoesMenu">
+                    <div class="acoes-item" onclick="closeAcoes()"><i class="ti ti-copy"></i> Copiar link</div>
+                    <div class="acoes-item" onclick="closeAcoes()"><i class="ti ti-external-link"></i> Abrir formulário</div>
+                    <div class="acoes-divider"></div>
+                    <div class="acoes-item orange" onclick="closeAcoes()"><i class="ti ti-refresh"></i> Reabrir formulário</div>
+                    <div class="acoes-item red" onclick="closeAcoes()"><i class="ti ti-trash"></i> Remover vínculo</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-data">
+              <strong>CPF / CNPJ:</strong> 12.345.678/0001-90<br>
+              <strong>Razão Social:</strong> Simples Reformas Ltda<br>
+              <strong>E-mail:</strong> contato@simplesreformas.com.br<br>
+              <strong>Telefone Completo:</strong> (62) 98765-4321<br>
+              <strong>Tipo de Serviço:</strong> Reforma Comercial<br>
+              <strong>Endereço Completo da Obra:</strong> Rua das Palmeiras, 142 — Setor Bueno, Goiânia/GO<br>
+              <strong>Descrição de serviços:</strong> Pintura interna, troca de piso e forro de gesso em área de 120m²
+            </div>
           </div>
-          <div class="form-actions">
-            <button class="btn-xs"><i class="ti ti-copy"></i> Copiar Link</button>
-            <button class="btn-xs"><i class="ti ti-external-link"></i> Abrir</button>
-            <button class="btn-xs orange"><i class="ti ti-refresh"></i> Reabrir</button>
-            <button class="btn-xs red"><i class="ti ti-trash"></i> Remover</button>
-          </div>
-          <div class="form-data">
-            <strong>CPF / CNPJ:</strong> 12.345.678/0001-90<br>
-            <strong>Razão Social:</strong> Simples Reformas Ltda<br>
-            <strong>E-mail:</strong> contato@simplesreformas.com.br<br>
-            <strong>Telefone Completo:</strong> (62) 98765-4321<br>
-            <strong>Tipo de Serviço:</strong> Reforma Comercial<br>
-            <strong>Endereço Completo da Obra:</strong> Rua das Palmeiras, 142 — Setor Bueno, Goiânia/GO<br>
-            <strong>Descrição de serviços:</strong> Pintura interna, troca de piso e forro de gesso em área de 120m²
-          </div>
-        </div>
 
         <div class="section-title">Atividades</div>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
@@ -916,21 +1005,34 @@
     var item = items.find(function(i){ return i.id === id; });
     if (!item) return;
     currentId = id;
+    var label = LABELS[item.stage] || item.stage;
+
+    // novo header rico
+    document.getElementById('modalCardName').textContent = item.name;
+    document.getElementById('modalStageBadge').textContent = label;
+    document.getElementById('modalRespName').textContent = item.resp || 'Valor Corretora';
+
+    // dados internos
     document.getElementById('editStage').value = item.stage;
-    document.getElementById('dEtapa').textContent = LABELS[item.stage] || item.stage;
+    document.getElementById('dEtapa').textContent = label;
     document.getElementById('dResp').textContent  = item.resp || 'Valor Corretora';
     document.getElementById('dNome').textContent  = item.name;
     document.getElementById('dFollow').textContent = item.followDate || '—';
     document.getElementById('editFollowDate').value = item.followDate || '';
+
     document.getElementById('modalEdit').classList.add('open');
   }
   function closeEdit() {
     document.getElementById('modalEdit').classList.remove('open');
+    closeAcoes();
+    closeMaisOpcoes();
     currentId = null;
   }
   function onStageChange() {
     var s = document.getElementById('editStage').value;
-    document.getElementById('dEtapa').textContent = LABELS[s] || s;
+    var label = LABELS[s] || s;
+    document.getElementById('dEtapa').textContent = label;
+    document.getElementById('modalStageBadge').textContent = label;
   }
   function saveItem() {
     if (!currentId) return;
@@ -947,6 +1049,38 @@
     renderKanban();
     closeEdit();
   }
+
+  /* DROPDOWN AÇÕES (formulário) */
+  function toggleAcoes() {
+    var btn  = document.getElementById('btnAcoes');
+    var menu = document.getElementById('acoesMenu');
+    var open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+  }
+  function closeAcoes() {
+    document.getElementById('acoesMenu').classList.remove('open');
+    document.getElementById('btnAcoes').classList.remove('open');
+  }
+
+  /* DROPDOWN MAIS OPÇÕES (header) */
+  function toggleMoreMenu() {
+    document.getElementById('moreMenu').classList.toggle('open');
+  }
+  function closeMaisOpcoes() {
+    var m = document.getElementById('moreMenu');
+    if (m) m.classList.remove('open');
+  }
+
+  /* fecha dropdowns ao clicar fora */
+  document.addEventListener('click', function(e) {
+    var acoesWrap = document.querySelector('.acoes-wrap');
+    if (acoesWrap && !acoesWrap.contains(e.target)) closeAcoes();
+    var moreBtn = document.getElementById('btnMoreOptions');
+    var moreMenu = document.getElementById('moreMenu');
+    if (moreMenu && moreBtn && !moreBtn.contains(e.target) && !moreMenu.contains(e.target)) {
+      closeMaisOpcoes();
+    }
+  });
 
   function onOverlayClick(e, id) {
     if (e.target.id === id) {
