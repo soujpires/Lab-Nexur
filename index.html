@@ -7,20 +7,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; }
+    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; }
 
     :root {
-      --bg-base: #0a0a0f;
-      --bg-sidebar: #0d0d14;
-      --bg-card: #13131e;
-      --bg-card2: #16161f;
-      --bg-hover: #1a1a28;
-      --bg-modal: #111118;
-      --border: #1e1e2e;
-      --border2: #252538;
-      --text-primary: #e8e8f0;
-      --text-secondary: #8888aa;
-      --text-muted: #55556a;
+      --bg-base: #0f1117;
+      --bg-sidebar: #13151f;
+      --bg-card: #181b25;
+      --bg-card2: #1c1f2e;
+      --bg-hover: #22263a;
+      --bg-modal: #161920;
+      --border: #252840;
+      --border2: #2e3148;
+      --text-primary: #e2e4f0;
+      --text-secondary: #9094b8;
+      --text-muted: #5a5e7a;
       --accent-cyan: #06b6d4;
       --accent-green: #10b981;
       --accent-purple: #7c3aed;
@@ -266,8 +266,21 @@
       transition: border-color 0.15s;
     }
     .kanban-card:hover { border-color: var(--accent-cyan); }
-    .kanban-card-title { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 7px; }
+    .kanban-card-title { font-size: 12.5px; font-weight: 500; color: var(--text-primary); margin-bottom: 10px; }
     .kanban-card-meta  { display: flex; align-items: center; gap: 6px; }
+    .kanban-card-fields { display: flex; flex-direction: column; gap: 5px; margin-top: 2px; }
+    .kanban-field-row {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11.5px; color: var(--text-muted);
+    }
+    .kanban-field-icon {
+      width: 18px; height: 18px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0;
+    }
+    .kanban-field-icon.person { background: rgba(6,182,212,0.15); color: var(--accent-cyan); }
+    .kanban-field-icon.link   { background: rgba(124,58,237,0.15); color: #a78bfa; }
+    .kanban-field-icon.doc    { background: rgba(16,185,129,0.12); color: var(--accent-green); }
     .avatar-sm {
       width: 20px; height: 20px; border-radius: 50%;
       background: rgba(124,58,237,0.25);
@@ -828,13 +841,24 @@
         body.innerHTML = '<div class="kanban-empty">Sem itens</div>';
       } else {
         body.innerHTML = filtered.map(function(item) {
-          var letter = (item.resp || 'V')[0].toUpperCase();
+          var escName = escHtml(item.name);
           return '<div class="kanban-card" onclick="openEdit(\'' + item.id + '\')">' +
             '<div class="kanban-card-title">' + escHtml(item.name) + '</div>' +
-            '<div class="kanban-card-meta">' +
-              '<div class="avatar-sm">' + letter + '</div>' +
-              '<span style="font-size:11px;color:var(--text-muted);">' + escHtml(item.resp || 'Valor Corretora') + '</span>' +
-            '</div></div>';
+            '<div class="kanban-card-fields">' +
+              '<div class="kanban-field-row">' +
+                '<div class="kanban-field-icon person"><i class="ti ti-user"></i></div>' +
+                '<span>' + escHtml(item.resp || '—') + '</span>' +
+              '</div>' +
+              '<div class="kanban-field-row">' +
+                '<div class="kanban-field-icon link"><i class="ti ti-link"></i></div>' +
+                '<span>—</span>' +
+              '</div>' +
+              '<div class="kanban-field-row">' +
+                '<div class="kanban-field-icon doc"><i class="ti ti-file-text"></i></div>' +
+                '<span>—</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
         }).join('');
       }
     });
