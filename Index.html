@@ -523,12 +523,32 @@
     /* activities block */
     .activities-block {
       background: var(--bg-modal-input); border: 0.5px solid var(--border-modal);
-      border-radius: 9px; padding: 14px; display: flex; flex-direction: column; gap: 0;
+      border-radius: 9px; padding: 14px; display: flex; flex-direction: column; gap: 8px;
     }
-    .activities-row { display: flex; gap: 8px; align-items: center; }
+    .activities-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .activities-select,
+    .activities-input {
+      height: 36px;
+      padding: 0 12px;
+      font-size: 13px;
+    }
+    .activities-btn {
+      height: 36px;
+      padding: 0 14px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+    }
     .activities-progress {
       display: flex; align-items: center; justify-content: space-between;
-      margin: 14px 0 6px;
+      margin-top: 6px;
     }
 
     /* global icon sizes inside modal — all +40% */
@@ -879,14 +899,12 @@
 
         <div class="activities-block">
           <div class="activities-row">
-            <select class="form-select" style="flex:1;"><option>Selecione um checklist...</option></select>
-            <button class="btn-ghost" style="white-space:nowrap;"><i class="ti ti-upload"></i> Importar</button>
+            <select class="form-select activities-select"><option>Selecione um checklist...</option></select>
+            <button class="btn-ghost activities-btn"><i class="ti ti-upload"></i> Importar</button>
           </div>
-          <div class="activities-row" style="margin-top:8px;">
-            <input class="form-input" style="flex:1;" placeholder="Nova atividade...">
-            <button class="btn-primary" style="white-space:nowrap;padding:8px 16px;">
-              <i class="ti ti-plus"></i> Adicionar
-            </button>
+          <div class="activities-row">
+            <input class="form-input activities-input" placeholder="Nova atividade...">
+            <button class="btn-primary activities-btn"><i class="ti ti-plus"></i> Adicionar</button>
           </div>
           <div class="activities-progress">
             <div style="display:flex;align-items:center;gap:6px;">
@@ -1036,14 +1054,6 @@
               '<div class="kanban-field-row">' +
                 '<div class="kanban-field-icon person"><i class="ti ti-user"></i></div>' +
                 '<span>' + escHtml(item.resp || '—') + '</span>' +
-              '</div>' +
-              '<div class="kanban-field-row">' +
-                '<div class="kanban-field-icon link"><i class="ti ti-link"></i></div>' +
-                '<span>—</span>' +
-              '</div>' +
-              '<div class="kanban-field-row">' +
-                '<div class="kanban-field-icon doc"><i class="ti ti-file-text"></i></div>' +
-                '<span>—</span>' +
               '</div>' +
             '</div>' +
           '</div>';
