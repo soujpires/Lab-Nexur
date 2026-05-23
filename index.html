@@ -357,9 +357,9 @@
     .form-label {
       font-size: 11px; color: var(--icon-label-color);
       text-transform: uppercase; letter-spacing: 0.7px;
-      display: flex; align-items: center; gap: 5px; font-weight: 500;
+      display: flex; align-items: center; gap: 6px; font-weight: 500;
     }
-    .form-label i { font-size: 13px; }
+    .form-label i { font-size: 15px; }
     .form-select, .form-input {
       background: var(--bg-modal-input); border: 0.5px solid var(--border-modal);
       border-radius: 7px; color: var(--text-modal-title);
@@ -493,10 +493,20 @@
 
     .form-data {
       background: var(--bg-modal-formdata); border-radius: 6px; padding: 12px;
-      font-size: 12px; color: var(--text-modal-body); line-height: 2;
+      font-size: 12px; color: var(--text-modal-body); line-height: 1.6;
       border: 0.5px solid rgba(255,255,255,0.05);
     }
     .form-data strong { color: var(--text-modal-muted); font-weight: 400; }
+    .form-data-row {
+      display: flex; align-items: flex-start; gap: 9px;
+      padding: 5px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    }
+    .form-data-row:last-child { border-bottom: none; }
+    .form-data-row > i {
+      font-size: 15px; color: var(--icon-label-color);
+      margin-top: 1px; flex-shrink: 0; width: 16px; text-align: center;
+    }
+    .form-data-row > span { flex: 1; }
 
     .progress-bar-wrap {
       height: 4px; background: var(--bg-hover); border-radius: 2px; overflow: hidden;
@@ -764,19 +774,41 @@
         </div>
 
         <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div class="section-title" style="margin-top:0;">Dados</div>
-          <i class="ti ti-edit" style="color:var(--text-modal-muted);font-size:14px;cursor:pointer;"></i>
+          <div class="section-title" style="margin-top:0;display:flex;align-items:center;gap:6px;">
+            <i class="ti ti-info-circle" style="font-size:15px;color:var(--icon-label-color);"></i> Dados
+          </div>
+          <i class="ti ti-edit" style="color:var(--text-modal-muted);font-size:15px;cursor:pointer;"></i>
         </div>
         <div class="data-grid">
-          <div class="data-field"><label>Etapa</label><span id="dEtapa">—</span></div>
-          <div class="data-field"><label>Responsável</label><span id="dResp">—</span></div>
-          <div class="data-field"><label>Nome</label><span id="dNome">—</span></div>
-          <div class="data-field"><label>Valor</label><span>—</span></div>
-          <div class="data-field"><label>Comissão</label><span>—</span></div>
-          <div class="data-field"><label>Follow-up</label><span id="dFollow">—</span></div>
+          <div class="data-field">
+            <label><i class="ti ti-flag" style="font-size:14px;color:var(--icon-label-color);vertical-align:-2px;margin-right:4px;"></i>Etapa</label>
+            <span id="dEtapa">—</span>
+          </div>
+          <div class="data-field">
+            <label><i class="ti ti-user-circle" style="font-size:14px;color:var(--icon-label-color);vertical-align:-2px;margin-right:4px;"></i>Responsável</label>
+            <span id="dResp">—</span>
+          </div>
+          <div class="data-field">
+            <label><i class="ti ti-id-badge" style="font-size:14px;color:var(--icon-label-color);vertical-align:-2px;margin-right:4px;"></i>Nome</label>
+            <span id="dNome">—</span>
+          </div>
+          <div class="data-field">
+            <label><i class="ti ti-currency-dollar" style="font-size:14px;color:var(--icon-label-color);vertical-align:-2px;margin-right:4px;"></i>Valor</label>
+            <span>—</span>
+          </div>
+          <div class="data-field">
+            <label><i class="ti ti-percentage" style="font-size:14px;color:var(--icon-label-color);vertical-align:-2px;margin-right:4px;"></i>Comissão</label>
+            <span>—</span>
+          </div>
+          <div class="data-field">
+            <label><i class="ti ti-calendar-event" style="font-size:14px;color:var(--icon-label-color);vertical-align:-2px;margin-right:4px;"></i>Follow-up</label>
+            <span id="dFollow">—</span>
+          </div>
         </div>
 
-        <div class="section-title">Formulários</div>
+        <div class="section-title" style="display:flex;align-items:center;gap:6px;">
+          <i class="ti ti-file-description" style="font-size:15px;color:var(--icon-label-color);"></i> Formulários
+        </div>
         <div style="display:flex;gap:8px;margin-bottom:12px;">
           <select class="form-select" style="flex:1;"><option>Selecione um formulário...</option></select>
           <button class="btn-primary"><i class="ti ti-link"></i> Vincular</button>
@@ -785,7 +817,7 @@
           <div class="form-card">
             <div class="form-card-header">
               <span class="form-card-title">
-                <i class="ti ti-file-text" style="font-size:14px;color:var(--accent-cyan);"></i>
+                <i class="ti ti-file-text" style="font-size:16px;color:var(--icon-label-color);"></i>
                 RC Simples &amp; Reformas
               </span>
               <div style="display:flex;align-items:center;gap:8px;">
@@ -806,17 +838,19 @@
               </div>
             </div>
             <div class="form-data">
-              <strong>CPF / CNPJ:</strong> 12.345.678/0001-90<br>
-              <strong>Razão Social:</strong> Simples Reformas Ltda<br>
-              <strong>E-mail:</strong> contato@simplesreformas.com.br<br>
-              <strong>Telefone Completo:</strong> (62) 98765-4321<br>
-              <strong>Tipo de Serviço:</strong> Reforma Comercial<br>
-              <strong>Endereço Completo da Obra:</strong> Rua das Palmeiras, 142 — Setor Bueno, Goiânia/GO<br>
-              <strong>Descrição de serviços:</strong> Pintura interna, troca de piso e forro de gesso em área de 120m²
+              <div class="form-data-row"><i class="ti ti-id-badge-2"></i><span><strong>CPF / CNPJ:</strong> 12.345.678/0001-90</span></div>
+              <div class="form-data-row"><i class="ti ti-building-store"></i><span><strong>Razão Social:</strong> Simples Reformas Ltda</span></div>
+              <div class="form-data-row"><i class="ti ti-mail"></i><span><strong>E-mail:</strong> contato@simplesreformas.com.br</span></div>
+              <div class="form-data-row"><i class="ti ti-phone"></i><span><strong>Telefone:</strong> (62) 98765-4321</span></div>
+              <div class="form-data-row"><i class="ti ti-tool"></i><span><strong>Tipo de Serviço:</strong> Reforma Comercial</span></div>
+              <div class="form-data-row"><i class="ti ti-map-pin"></i><span><strong>Endereço:</strong> Rua das Palmeiras, 142 — Setor Bueno, Goiânia/GO</span></div>
+              <div class="form-data-row"><i class="ti ti-clipboard-text"></i><span><strong>Descrição:</strong> Pintura interna, troca de piso e forro de gesso em área de 120m²</span></div>
             </div>
           </div>
 
-        <div class="section-title">Atividades</div>
+        <div class="section-title" style="display:flex;align-items:center;gap:6px;">
+          <i class="ti ti-checklist" style="font-size:15px;color:var(--icon-label-color);"></i> Atividades
+        </div>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
           <select class="form-select" style="flex:1;"><option>Selecione um checklist...</option></select>
           <button class="btn-ghost"><i class="ti ti-upload"></i> Importar</button>
@@ -826,7 +860,9 @@
           <button class="btn-primary">Adicionar</button>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
-          <span style="font-size:12px;color:var(--text-modal-muted);">Progresso</span>
+          <span style="font-size:12px;color:var(--text-modal-muted);display:flex;align-items:center;gap:5px;">
+            <i class="ti ti-chart-bar" style="font-size:14px;color:var(--icon-label-color);"></i> Progresso
+          </span>
           <span style="font-size:12px;color:var(--accent-cyan);font-weight:600;">100%</span>
         </div>
         <div class="progress-bar-wrap" style="margin-bottom:18px;">
@@ -840,10 +876,16 @@
 
       <!-- RIGHT -->
       <div class="modal-right">
-        <div style="font-size:14px;font-weight:600;color:var(--text-modal-title);border-bottom:0.5px solid var(--border-modal);padding-bottom:10px;">Follow-Up</div>
+        <div style="display:flex;align-items:center;gap:8px;border-bottom:0.5px solid var(--border-modal);padding-bottom:12px;">
+          <i class="ti ti-message-circle" style="font-size:18px;color:var(--icon-label-color);"></i>
+          <span style="font-size:14px;font-weight:600;color:var(--text-modal-title);">Follow-Up</span>
+        </div>
         <textarea class="follow-textarea" placeholder="Escreva uma mensagem... use @ para mencionar"></textarea>
 
-        <div style="font-size:11px;font-weight:700;color:var(--icon-label-color);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Atividades recentes</div>
+        <div style="display:flex;align-items:center;gap:7px;margin-top:4px;">
+          <i class="ti ti-history" style="font-size:15px;color:var(--icon-label-color);"></i>
+          <span style="font-size:11px;font-weight:700;color:var(--icon-label-color);text-transform:uppercase;letter-spacing:1px;">Atividades recentes</span>
+        </div>
 
         <div id="activityFeed">
           <div class="activity-item">
@@ -887,10 +929,14 @@
 
     <div class="modal-footer">
       <button class="btn-save" onclick="saveItem()">
-        <i class="ti ti-device-floppy"></i> Salvar Alterações
+        <i class="ti ti-device-floppy" style="font-size:16px;"></i> Salvar Alterações
       </button>
-      <button class="btn-archive"><i class="ti ti-archive"></i> Arquivar</button>
-      <button class="btn-delete" onclick="deleteItem()"><i class="ti ti-trash"></i> Excluir</button>
+      <button class="btn-archive" title="Arquivar item">
+        <i class="ti ti-archive" style="font-size:16px;"></i> Arquivar
+      </button>
+      <button class="btn-delete" onclick="deleteItem()" title="Excluir item">
+        <i class="ti ti-trash" style="font-size:16px;"></i> Excluir
+      </button>
     </div>
   </div>
 </div>
